@@ -6,14 +6,10 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e6ec4238-5d49-43a6-8241-70346146e049" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
-	</http:listener-config>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="f6d49fd0-4ce1-4791-8b8e-2f00055e53e6" >
 		<db:my-sql-connection host="mudb.mulesoft-training.com" port="3306" user="mule" password="mule" database="training" />
 	</db:config>
 	<flow name="getFlights" doc:id="b3bfb663-f0b0-473f-b952-7bdd2ac2bfab" >
-		<http:listener doc:name="Get_Listener" doc:id="60ffc094-5d16-426c-b2ab-229753b4344b" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET"/>
 		<db:select doc:name="Select" doc:id="7e3f90d3-97e1-40cb-8e1d-eae17446a636" config-ref="Database_Config">
 			<db:sql >SELECT * FROM american</db:sql>
 		</db:select>
@@ -39,7 +35,6 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</ee:transform>
 	</flow>
 	<flow name="getFlightsByID" doc:id="dd62c373-d8c4-4eeb-875b-e44abeab2d65" >
-		<http:listener doc:name="GET_ID_Listener" doc:id="52e36a6e-f2ee-4c01-a551-6c81c47ee1f7" config-ref="HTTP_Listener_config" path="/flights/{ID}" allowedMethods="GET" />
 		<db:select doc:name="ID_Select" doc:id="3f1647d4-ff17-4084-b7d0-8be74ede4eae" config-ref="Database_Config" >
 			<db:sql >SELECT *
 FROM american
@@ -68,7 +63,6 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</ee:transform>
 	</flow>
 	<flow name="postFlight" doc:id="d2f28ed7-ec02-4c12-8cfe-3c6f7c7722df" >
-		<http:listener doc:name="Post_Listener" doc:id="89366525-72a7-49bf-a2db-4fceea5508cc" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="POST"/>
 		<set-payload value='{"message": "Flight added (but not really)"}' doc:name="Set Payload" doc:id="8e26be1c-55d2-4966-8731-016ea535090b" />
 	</flow>
 </mule>
